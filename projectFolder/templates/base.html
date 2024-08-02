@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KOMRONBEK</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">KOMRONBEK</a></h1>
+    </header>
+
+    {% if user.is_authenticated %}
+        {% comment %} Saytga kirganini tekshiradi {% endcomment %}
+        <p>Xush kelibsiz, {{ user.username }}</p>
+        <form id="logout-form" method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            {% comment %}  chiqib ketishga link {% endcomment %}
+            <button type="submit">Chiqib ketish</button>
+            {% comment %} tugma chiqib ketish uchun  {% endcomment %}
+        </form>
+    {% else %}
+        <p>
+            <a href="{% url 'login' %}">Saytga kirish</a> |
+            <a href="{% url 'signup' %}">Ro'yxatdan o'tish</a>
+        </p>
+    {% endif %}
+
+    <footer>
+        <h2><a href="{% url 'post_new' %}">Yangi post yozish</a></h2>
+    </footer>
+
+    {% block content %}
+    {% endblock content %}
+
+</body>
+</html>
